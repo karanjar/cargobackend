@@ -10,8 +10,12 @@ import (
 var Db *sql.DB
 
 func ConnectDb() {
-
-	dsn := "user=dustin password=12345 dbname=cardb sslmode=disable"
+	const (
+		user     = "dustin"
+		password = "12345"
+		dbname   = "cardb"
+	)
+	dsn := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", user, password, dbname)
 
 	db, err := sql.Open("postgres", dsn)
 	if err != nil {

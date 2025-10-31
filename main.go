@@ -6,14 +6,20 @@ import (
 
 	"github.com/karanjar/cargobackend.git/config"
 	"github.com/karanjar/cargobackend.git/handlers"
+	"github.com/karanjar/cargobackend.git/middleware"
 )
 
 func main() {
 	config.ConnectDb()
 
-	http.HandleFunc("/", handlers.Carhandler)
-	http.HandleFunc("/cars/", handlers.Carhandler)
+	mux := http.NewServeMux()
+
+	mux.HandleFunc("/", handlers.Carhandler)
+	mux.HandleFunc("/cars/", handlers.Carhandler)
+
+	wrappedMux := middleware.Logger(mux)
+	wrappedMux = middleware.SecureHeaders(wrappedMux)
 
 	fmt.Println("HTTP server listenning on port 8080")
-	http.ListenAndServe(":8081", nil)
+	http.ListenAndServe(":8080", wrappedMux)
 }

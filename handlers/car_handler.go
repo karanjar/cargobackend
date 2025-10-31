@@ -6,11 +6,8 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"sync"
-
-	//"strconv"
-
 	"strings"
+	"sync"
 
 	"github.com/karanjar/cargobackend.git/models"
 )
